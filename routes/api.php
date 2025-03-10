@@ -5,4 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RouterHendler;
 
 Route::post('login', [RouterHendler::class, 'login']);
-Route::get('/user', [RouterHendler::class, 'profile'])->middleware('auth:sanctum');
+
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user', [RouterHendler::class, 'profile']);
+    Route::get('/get-setting', [RouterHendler::class, 'getSetting']);
+    Route::post('/update-setting', [RouterHendler::class, 'updateSetting']);
+});

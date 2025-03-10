@@ -43,4 +43,32 @@ class RouterHendler extends Controller
 
         return ResponseFormatter::success($user);
     }
+    public function getSetting()
+    {
+        $setting = \App\Models\Setting::get(['key', 'value']);
+        $result = [];
+        foreach ($setting as $setting) {
+            $result[$setting->key] = $setting->value;
+        }
+        return ResponseFormatter::success($result);
+    }
+    public function updateSetting()
+    {
+        $rules = [];
+        $setting = \App\Models\Setting::get(['key', 'validation']);
+        foreach ($setting as $setting) {
+            $rules[$setting->key] = $setting->validation;
+        }
+        $validator = \Validator::make(request()->all(), $rules);
+
+        if ($validator->fails()) {
+            return ResponseFormatter::error(400, $validator->errors());
+        }
+
+        $payload = request()->validate($rules);
+        foreach ($payload as $key => $value) {
+            \App\Models\Setting::where('key', $key)->update(['value' => $value]);
+        }
+        return $this->getSetting();
+    }
 }
