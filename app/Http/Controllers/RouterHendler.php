@@ -8,10 +8,33 @@ use App\Models\User;
 
 
 
+
+
 use function PHPUnit\Framework\isNull;
 
 class RouterHendler extends Controller
 {
+    public function contact()
+    {
+        $validator = \Validator::make(request()->all(), [
+            'name' => 'required|max:50',
+            'email' => 'required|email',
+            'phone_number' => 'required|max:50',
+            'message' => 'required|max:5000',
+        ]);
+
+        if ($validator->fails()) {
+            return ResponseFormatter::error(400, $validator->errors());
+        }
+        $admin = \App\Models\Setting::where('key', 'email')->first()->value;
+        \Mail::to($admin)->send(new \App\Mail\ContactEmail(
+            request()->name,
+            request()->email,
+            request()->phone_number,
+            request()->message,
+        ));
+        return ResponseFormatter::success(['message' => 'Pesan berhasil dikirim']);
+    }
     public function login()
     {
         $validator = \Validator::make(request()->all(), [
