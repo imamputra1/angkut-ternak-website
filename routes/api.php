@@ -6,6 +6,7 @@ use App\Http\Controllers\RouterHendler;
 
 Route::post('login', [RouterHendler::class, 'login']);
 Route::post('contact-us', [RouterHendler::class, 'contact']);
+Route::get('setting', [RouterHendler::class, 'getPublicSetting']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [RouterHendler::class, 'profile']);

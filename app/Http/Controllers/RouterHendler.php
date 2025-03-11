@@ -94,4 +94,14 @@ class RouterHendler extends Controller
         }
         return $this->getSetting();
     }
+
+    public function getPublicSetting()
+    {
+        $setting = \App\Models\Setting::get(['key', 'value']);
+        $result = [];
+        foreach ($setting as $setting) {
+            $result[$setting->key] = $setting->value;
+        }
+        return ResponseFormatter::success($result);
+    }
 }
