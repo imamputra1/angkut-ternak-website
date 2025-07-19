@@ -15,21 +15,21 @@ class ContactEmail extends Mailable
 
     public string $name;
     public string $email;
-    public string $phone_number;
+    public string $phoneNumber;
     public string $contactMassage;
     /**
      * Create a new message instance.
      */
-    public function __construct(string $name, string $email, string $phone_number, string $message)
+    public function __construct(string $name, string $email, string $phoneNumber, string $message)
     {
         $this->name = $name;
         $this->email = $email;
-        $this->phone_number = $phone_number;
+        $this->phoneNumber = $phoneNumber;
         $this->contactMassage = $message;
     }
 
     /**
-     * Get the message envelope. 
+     * Get the message envelope.
      */
     public function envelope(): Envelope
     {

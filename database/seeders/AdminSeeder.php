@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
         $payload = [
             'name' => 'Administator',
             'email' => 'Admin@website.com',
-            'password' => bcrypt('12345678')
+            'password' => bcrypt('Sukses2026')
         ];
 
         $check = User::where('email', $payload['email'])->first();
